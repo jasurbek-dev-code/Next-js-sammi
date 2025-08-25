@@ -11,7 +11,7 @@ export default function Footer() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "primary.main",
+        backgroundColor: "#141414",
         color: "white",
       }}
     >
@@ -25,7 +25,6 @@ export default function Footer() {
         <InstagramIcon sx={{cursor:"pointer"}} />
         <YouTubeIcon sx={{cursor:"pointer"}} />
       </Box>
-      <div ></div>
     </Box>
   );
 }

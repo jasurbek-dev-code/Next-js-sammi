@@ -6,6 +6,7 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { format } from "date-fns";
+import { BlogsType } from "@/interfaces/interfaces.interface";
 export interface Author {
   name: string;
   image: string;
@@ -18,32 +19,11 @@ export interface Article {
   author: Author;
 }
 
-const data: Article[] = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1607706189992-eae578626c86?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Technical SEO with Hygraph",
-    excerpt:
-      "Get started with your SEO implementation when using a Headless CMS",
-    author: {
-      name: "Samar Badriddinov",
-      image: "https://media.graphassets.com/DkfNqQNGRz2F4UFntKQx",
-    },
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Union Types and Sortable Relations with Hygraph",
-    excerpt:
-      "Learn more about Polymorphic Relations and Sortable Relations with Hygraph",
-    author: {
-      name: "Samar Badriddinov",
-      image: "https://media.graphassets.com/DkfNqQNGRz2F4UFntKQx",
-    },
-  },
-];
 
-export default function Hero() {
+interface ContentProps {
+  blogs: BlogsType[]; 
+}
+export default function Hero({ blogs }: ContentProps) {
   return (
     <Box width={"100%"} height={"70vh"}>
       <Carousel
@@ -54,11 +34,11 @@ export default function Hero() {
           },
         }}
       >
-        {data.map((item) => (
-          <Box key={item.image}>
+        {blogs.map((item) => (
+          <Box key={item.id}>
             <Box sx={{ position: "relative", width: "100%", height: "70vh" }}>
               <Image
-                src={item.image}
+                src={item.image.url}
                 alt={item.title}
                 fill
                 style={{ objectFit: "cover" }}
@@ -100,11 +80,11 @@ export default function Hero() {
                     alignItems: "center",
                   }}
                 >
-                  <Avatar src={item.author.image} alt={item.author.name} />
+                  <Avatar src={item.author.avatar.url} alt={item.author.name} />
                   <Box>
                     <Typography>{item.author.name}</Typography>
                     <Box>
-                      {format(new Date(), "dd MMM, yyyy")} &#x2022; 10min read
+                      {format(new Date(item.createdAt), "dd MMM, yyyy")} &#x2022; 10min read
                     </Box>
                   </Box>
                 </Box>

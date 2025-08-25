@@ -1,48 +1,30 @@
-import { navItems } from "@/config/constants";
 import { Avatar, Box, Button, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import React, { Fragment } from "react";
-import {format} from "date-fns"
-const data = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1607706189992-eae578626c86?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Technical SEO with Hygraph",
-    excerpt:
-      "Get started with your SEO implementation when using a Headless CMS",
-    author: {
-      name: "Samar Badriddinov",
-      image: "https://media.graphassets.com/DkfNqQNGRz2F4UFntKQx",
-    },
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Union Types and Sortable Relations with Hygraph",
-    excerpt:
-      "Learn more about Polymorphic Relations and Sortable Relations with Hygraph",
-    author: {
-      name: "Samar Badriddinov",
-      image: "https://media.graphassets.com/DkfNqQNGRz2F4UFntKQx",
-    },
-  },
-];
-export default function Sidebar() {
+import { format } from "date-fns";
+import { Category, LatestBlog } from "@/interfaces/interfaces.interface";
+
+interface SidebarProps {
+  blogs: LatestBlog[];
+  categories: Category[];
+}
+
+export default function Sidebar({ blogs, categories }: SidebarProps) {
   return (
-    <Box width={{xs:"100%",md:"30%"}} >
-      <Box position={'sticky'} top={"100px"} sx={{transition:"all .3 ease"}}>
+    <Box width={{ xs: "100%", md: "30%" }}>
+      <Box position={"sticky"} top={"100px"} sx={{ transition: "all .3 ease" }}>
         <Box padding={"20px"} border={"1px solid gray"} borderRadius={"8px"}>
           <Typography variant="h5">Category</Typography>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginTop: "20px" }}
           >
-            {data.map((item) => (
-              <Box key={item.title} marginTop={"20px"}>
+            {blogs.map((item) => (
+              <Box key={item.id} marginTop={"20px"}>
                 <Box
                   sx={{ display: "flex", gap: "20px", alignItems: "center" }}
                 >
                   <Image
-                    src={item.image}
+                    src={item.image.url}
                     alt={item.title}
                     width={100}
                     height={100}
@@ -64,13 +46,16 @@ export default function Sidebar() {
                         alignItems: "center",
                       }}
                     >
-                      <Avatar src={item.author.image} alt={item.author.name} />
+                      <Avatar
+                        src={item.author.avatar.url}
+                        alt={item.author.name}
+                      />
                       <Box>
                         <Typography variant="body2">
                           {item.author.name}
                         </Typography>
                         <Box sx={{ opacity: ".7", fontSize: "14px" }}>
-                          {format(new Date(), "dd MMM, yyyy")}
+                          {format(new Date(item.createdAt), "dd MMM, yyyy")}
                         </Box>
                       </Box>
                     </Box>
@@ -91,8 +76,8 @@ export default function Sidebar() {
           <Box
             sx={{ display: "flex", flexDirection: "column", marginTop: "20px" }}
           >
-            {navItems.map((item) => (
-              <Fragment key={item.route}>
+            {categories.map((item) => (
+              <Fragment key={item.id}>
                 <Button
                   fullWidth
                   sx={{ justifyContent: "flex-start", height: "50px" }}

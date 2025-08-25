@@ -2,36 +2,16 @@ import { Avatar, Box, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import {format} from "date-fns"
-const data = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1607706189992-eae578626c86?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Technical SEO with Hygraph",
-    excerpt:
-      "Get started with your SEO implementation when using a Headless CMS",
-    author: {
-      name: "Samar Badriddinov",
-      image: "https://media.graphassets.com/DkfNqQNGRz2F4UFntKQx",
-    },
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Union Types and Sortable Relations with Hygraph",
-    excerpt:
-      "Learn more about Polymorphic Relations and Sortable Relations with Hygraph",
-    author: {
-      name: "Samar Badriddinov",
-      image: "https://media.graphassets.com/DkfNqQNGRz2F4UFntKQx",
-    },
-  },
-];
-export default function Content() {
+import { BlogsType } from "@/interfaces/interfaces.interface";
+interface ContentProps {
+  blogs: BlogsType[]; 
+}
+export default function Content({ blogs }: ContentProps) {
   return (
     <Box width={{ xs: "100%", md: "70%" }} height={"200vh"}>
-      {data.map((item) => (
+      {blogs.map((item) => (
         <Box
-          key={item.image}
+          key={item.id}
           sx={{
             backgroundColor: "rgba(0,0,0,.5)",
             padding: "20px",
@@ -46,7 +26,7 @@ export default function Content() {
             height={{ xs: "30vh", md: "50vh" }}
           >
             <Image
-              src={item.image}
+              src={item.image.url}
               alt={item.title}
               fill
               style={{ objectFit: "cover" }}
@@ -67,11 +47,11 @@ export default function Content() {
               alignItems: "center",
             }}
           >
-            <Avatar src={item.author.image} alt={item.author.name} />
+            <Avatar src={item.author.avatar.url} alt={item.author.name} />
             <Box>
               <Typography>{item.author.name}</Typography>
               <Box>
-                {format(new Date(), "dd MMM, yyyy")} &#x2022; 10min read
+                {format(new Date(item.createdAt), "dd MMM, yyyy")} &#x2022; 10min read
               </Box>
             </Box>
           </Box>

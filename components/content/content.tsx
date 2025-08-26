@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import {format} from "date-fns"
 import { BlogsType } from "@/interfaces/interfaces.interface";
+import { estimatedTimeToRead } from "@/utils/time";
 interface ContentProps {
   blogs: BlogsType[]; 
 }
@@ -51,7 +52,7 @@ export default function Content({ blogs }: ContentProps) {
             <Box>
               <Typography>{item.author.name}</Typography>
               <Box>
-                {format(new Date(item.createdAt), "dd MMM, yyyy")} &#x2022; 10min read
+                {format(new Date(item.createdAt), "dd MMM, yyyy")} &#x2022; {estimatedTimeToRead(item.description.text)}min read
               </Box>
             </Box>
           </Box>

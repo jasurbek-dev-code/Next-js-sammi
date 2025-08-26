@@ -1,8 +1,10 @@
-
 export interface BlogsType {
   excerpt: string;
   id: string;
   createdAt: string;
+  description: {
+    text: string;
+  };
   image: {
     id: string;
     url: string;

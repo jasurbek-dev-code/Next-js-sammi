@@ -7,6 +7,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { format } from "date-fns";
 import { BlogsType } from "@/interfaces/interfaces.interface";
+import { estimatedTimeToRead } from "@/utils/time";
 export interface Author {
   name: string;
   image: string;
@@ -84,7 +85,7 @@ export default function Hero({ blogs }: ContentProps) {
                   <Box>
                     <Typography>{item.author.name}</Typography>
                     <Box>
-                      {format(new Date(item.createdAt), "dd MMM, yyyy")} &#x2022; 10min read
+                      {format(new Date(item.createdAt), "dd MMM, yyyy")} &#x2022; {estimatedTimeToRead(item.description.text)}min read
                     </Box>
                   </Box>
                 </Box>

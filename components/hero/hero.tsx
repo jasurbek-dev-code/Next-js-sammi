@@ -8,6 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import { format } from "date-fns";
 import { BlogsType } from "@/interfaces/interfaces.interface";
 import { estimatedTimeToRead } from "@/utils/time";
+import { useRouter } from "next/navigation";
 export interface Author {
   name: string;
   image: string;
@@ -20,11 +21,11 @@ export interface Article {
   author: Author;
 }
 
-
 interface ContentProps {
-  blogs: BlogsType[]; 
+  blogs: BlogsType[];
 }
 export default function Hero({ blogs }: ContentProps) {
+  const router = useRouter();
   return (
     <Box width={"100%"} height={"70vh"}>
       <Carousel
@@ -37,7 +38,15 @@ export default function Hero({ blogs }: ContentProps) {
       >
         {blogs.map((item) => (
           <Box key={item.id}>
-            <Box sx={{ position: "relative", width: "100%", height: "70vh" }}>
+            <Box
+              sx={{
+                position: "relative",
+                width: "100%",
+                height: "70vh",
+                cursor: "pointer",
+              }}
+              onClick={() => router.push(`/blogs/${item.slug}`)}
+            >
               <Image
                 src={item.image.url}
                 alt={item.title}
@@ -85,7 +94,9 @@ export default function Hero({ blogs }: ContentProps) {
                   <Box>
                     <Typography>{item.author.name}</Typography>
                     <Box>
-                      {format(new Date(item.createdAt), "dd MMM, yyyy")} &#x2022; {estimatedTimeToRead(item.description.text)}min read
+                      {format(new Date(item.createdAt), "dd MMM, yyyy")}{" "}
+                      &#x2022; {estimatedTimeToRead(item.description.text)}min
+                      read
                     </Box>
                   </Box>
                 </Box>

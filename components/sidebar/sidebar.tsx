@@ -1,8 +1,11 @@
+"use client"
+
 import { Avatar, Box, Button, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import React, { Fragment } from "react";
 import { format } from "date-fns";
 import { Category, LatestBlog } from "@/interfaces/interfaces.interface";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   blogs: LatestBlog[];
@@ -10,6 +13,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ blogs, categories }: SidebarProps) {
+  const router = useRouter();
   return (
     <Box width={{ xs: "100%", md: "30%" }}>
       <Box position={"sticky"} top={"100px"} sx={{ transition: "all .3 ease" }}>
@@ -19,7 +23,12 @@ export default function Sidebar({ blogs, categories }: SidebarProps) {
             sx={{ display: "flex", flexDirection: "column", marginTop: "20px" }}
           >
             {blogs.map((item) => (
-              <Box key={item.id} marginTop={"20px"}>
+              <Box
+                onClick={() => router.push(`/blogs/${item.slug}`)}
+                sx={{ cursor: "pointer" }}
+                key={item.id}
+                marginTop={"20px"}
+              >
                 <Box
                   sx={{ display: "flex", gap: "20px", alignItems: "center" }}
                 >

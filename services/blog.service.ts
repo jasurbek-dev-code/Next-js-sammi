@@ -1,4 +1,5 @@
 import {
+  Blog,
   BlogsType,
   Category,
   LatestBlog,
@@ -87,5 +88,43 @@ export const BlogsService = {
       categories: Category[];
     }>(graphqlAPI, query);
     return result.categories;
+  },
+  async getDetailedBlog(slug: string) {
+    const query = gql`
+      query getDetailedBlog($slug: String!) {
+        blog(where: { slug: $slug }) {
+          excerpt
+          id
+          createdAt
+          description {
+            text
+            html
+          }
+          image {
+            id
+            url
+          }
+          author {
+            id
+            name
+            avatar {
+              id
+              url
+            }
+          }
+          category {
+            id
+            slug
+            label
+          }
+          title
+          slug
+        }
+      }
+    `;
+    const result = await request<{
+      blog: Blog;
+    }>(graphqlAPI, query, { slug });
+    return result.blog;
   },
 };

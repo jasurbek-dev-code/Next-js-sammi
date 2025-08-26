@@ -1,15 +1,18 @@
+"use client"
 import { Avatar, Box, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import {format} from "date-fns"
 import { BlogsType } from "@/interfaces/interfaces.interface";
 import { estimatedTimeToRead } from "@/utils/time";
+import { useRouter } from "next/navigation";
 interface ContentProps {
   blogs: BlogsType[]; 
 }
 export default function Content({ blogs }: ContentProps) {
+  const router=useRouter()
   return (
-    <Box width={{ xs: "100%", md: "70%" }} height={"200vh"}>
+    <Box width={{ xs: "100%", md: "70%" }} >
       {blogs.map((item) => (
         <Box
           key={item.id}
@@ -19,7 +22,9 @@ export default function Content({ blogs }: ContentProps) {
             marginTop: "20px",
             boxShadow: "0px 8px 16px rgba(255,255,255,.1)",
             borderRadius: "8px",
+            cursor:"pointer"
           }}
+          onClick={()=>router.push(`/blogs/${item.slug}`)}
         >
           <Box
             position={"relative"}
@@ -30,7 +35,7 @@ export default function Content({ blogs }: ContentProps) {
               src={item.image.url}
               alt={item.title}
               fill
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover",borderRadius:"10px" }}
             />
           </Box>
           <Typography variant="h4" sx={{ marginTop: "20px" }}>

@@ -3,7 +3,7 @@ import { Avatar, Box, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import {format} from "date-fns"
-import { BlogsType } from "@/interfaces/interfaces.interface";
+import {  BlogsType } from "@/interfaces/interfaces.interface";
 import { estimatedTimeToRead } from "@/utils/time";
 import { useRouter } from "next/navigation";
 interface ContentProps {

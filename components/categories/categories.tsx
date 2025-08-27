@@ -30,7 +30,7 @@ export default function Categories({ categories }: { categories: Category[] }) {
         {categories.map((item) => (
           <Button
             key={item.id}
-            onClick={() => router.push(`/category/${item.slug}`)}
+            onClick={() => router.push(`/categories/${item.slug}`)}
           >
             # {item.label}
           </Button>

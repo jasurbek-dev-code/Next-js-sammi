@@ -88,7 +88,7 @@ export default function Sidebar({ blogs, categories }: SidebarProps) {
             {categories.map((item) => (
               <Fragment key={item.id}>
                 <Button
-                  onClick={() => router.push(`category/${item.slug}`)}
+                  onClick={() => router.push(`/categories/${item.slug}`)}
                   fullWidth
                   sx={{ justifyContent: "flex-start", height: "50px" }}
                 >

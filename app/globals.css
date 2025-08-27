@@ -1,1 +1,7 @@
-@import "tailwindcss";
+    @import "tailwindcss";
+
+    #nprogress .bar{
+        height:4px !important;
+        background-color:red !important;
+        z-index:9999 !important;
+    }

@@ -1,11 +1,9 @@
-import { Content } from "@/components";
+import Categories from "@/components/categories/categories";
 import { BlogsService } from "@/services/blog.service";
-import { Box } from "@mui/material";
 import { Metadata } from "next";
-import React from "react";
 
 export const metadata: Metadata = {
-  title: "Blogs",
+  title: "All Categories",
   description: "All blogs about IT",
   keywords: ["IT", "programming", "frontend", "nextjs"],
   authors: [
@@ -18,19 +16,6 @@ export const metadata: Metadata = {
   },
 };
 export default async function Page() {
-  
-  const blogs = await BlogsService.getAllBlogs();
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        gap: "20px",
-        flexDirection: { xs: "column", md: "row" },
-        padding: "20px",
-        justifyContent:"center"
-      }}
-    >
-      <Content blogs={blogs} />
-    </Box>
-  );
+  const categories = await BlogsService.getCategories();
+  return <Categories categories={categories} />;
 }

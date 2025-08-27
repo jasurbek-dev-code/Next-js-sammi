@@ -19,11 +19,13 @@ import React, { useState } from "react";
 import { navItems } from "@/config/constants";
 import CloseIcon from "@mui/icons-material/Close";
 import AdjustIcon from "@mui/icons-material/Adjust";
+import { useRouter } from "next/navigation";
 
 interface Props {
   window?: () => Window;
 }
 export default function Navbar({ window }: Props) {
+  const router=useRouter()
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
   const container =
@@ -38,7 +40,16 @@ export default function Navbar({ window }: Props) {
           padding: "0 20px",
         }}
       >
-        <Box sx={{ my: 2, display: "flex", alignItems: "center", gap: "5px" }}>
+        <Box
+          sx={{
+            my: 2,
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+            cursor: "pointer",
+          }}
+          onClick={() => router.push("/")}
+        >
           <AdjustIcon />
           <Typography variant="h6">Sammi</Typography>
         </Box>
@@ -48,7 +59,10 @@ export default function Navbar({ window }: Props) {
       <List>
         {navItems.map((item) => (
           <ListItem key={item.route} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
+            <ListItemButton
+              sx={{ textAlign: "center" }}
+              onClick={() => router.push(`${item.route}`)}
+            >
               <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
@@ -76,7 +90,9 @@ export default function Navbar({ window }: Props) {
               gap: "5px",
               flexGrow: 1,
               display: { xs: "none", sm: "flex" },
+              cursor:"pointer"
             }}
+            onClick={()=>router.push("/")}
           >
             <AdjustIcon />
             <Typography
@@ -89,7 +105,7 @@ export default function Navbar({ window }: Props) {
 
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button key={item.route} sx={{ color: "#fff" }}>
+              <Button key={item.route} sx={{ color: "#fff" }} onClick={()=>router.push(`${item.route}`)}>
                 {item.label}
               </Button>
             ))}

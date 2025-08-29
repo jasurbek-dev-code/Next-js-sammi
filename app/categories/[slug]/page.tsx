@@ -27,11 +27,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const blogs = await BlogsService.getCategorizedBlog(slug);
+export default async function Page({ params }: { params: { slug: string } }) {
+  const blogs = await BlogsService.getCategorizedBlog(params.slug);
   const latestBlogs = await BlogsService.getLatestBlogs();
   const categories = await BlogsService.getCategories();
+
   return (
     <Box
       sx={{

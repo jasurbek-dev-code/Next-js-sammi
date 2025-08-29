@@ -30,7 +30,7 @@ export async function generateMetadata({
   };
 } 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const blog = await BlogsService.getDetailedBlog(params.slug);
+  const blog = await BlogsService.getDetailedBlog(params?.slug);
   const latestBlogs = await BlogsService.getLatestBlogs();
   const categories = await BlogsService.getCategories();
 

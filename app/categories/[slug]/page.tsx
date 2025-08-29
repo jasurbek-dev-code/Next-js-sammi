@@ -28,7 +28,7 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const blogs = await BlogsService.getCategorizedBlog(params.slug);
+  const blogs = await BlogsService.getCategorizedBlog(params?.slug);
   const latestBlogs = await BlogsService.getLatestBlogs();
   const categories = await BlogsService.getCategories();
 

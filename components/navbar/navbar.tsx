@@ -31,7 +31,10 @@ export default function Navbar({ window }: Props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{height:"100vh", textAlign: "center", backgroundColor: "#141414", color: "white" }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -53,10 +56,10 @@ export default function Navbar({ window }: Props) {
           <AdjustIcon />
           <Typography variant="h6">Sammi</Typography>
         </Box>
-        <CloseIcon />
+        <CloseIcon style={{cursor:"pointer"}} />
       </Box>
-      <Divider />
-      <List>
+      <Divider style={{backgroundColor:"rgba(255,255,255,.5)"}} />
+      <List >
         {navItems.map((item) => (
           <ListItem key={item.route} disablePadding>
             <ListItemButton
@@ -72,7 +75,7 @@ export default function Navbar({ window }: Props) {
   );
   return (
     <Box height={"10vh"} sx={{ display: "flex" }}>
-      <AppBar sx={{height:"10vh",backgroundColor:"#141414"}} component="nav">
+      <AppBar sx={{backgroundColor:"#141414"}} component="nav">
         <Toolbar>
           <IconButton
             color="inherit"

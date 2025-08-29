@@ -13,6 +13,7 @@ export default function Footer() {
         alignItems: "center",
         backgroundColor: "#141414",
         color: "white",
+        borderTop:"1px solid rgba(255,255,255, .5)"
       }}
     >
       <Typography>

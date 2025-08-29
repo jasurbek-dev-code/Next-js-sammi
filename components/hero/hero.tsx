@@ -27,7 +27,7 @@ interface ContentProps {
 export default function Hero({ blogs }: ContentProps) {
   const router = useRouter();
   return (
-    <Box width={"100%"} height={"70vh"}>
+    <Box marginTop={"-10px"} width={"100%"} height={"70vh"}>
       <Carousel
         responsive={{
           mobile: {

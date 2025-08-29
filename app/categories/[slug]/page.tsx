@@ -1,16 +1,14 @@
 import { Content, Sidebar } from "@/components";
 import { BlogsService } from "@/services/blog.service";
 import { Box } from "@mui/material";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import React from "react";
-interface BlogCategoryPageProps {
-  params: { slug: string };
-}
 
-export async function generateMetadata(
-  { params }: BlogCategoryPageProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   return {
     title: params.slug.charAt(0).toUpperCase() + params.slug.slice(1),
     description: "All blogs about IT",
@@ -29,11 +27,11 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page({ params }: BlogCategoryPageProps) {
-  const blogs = await BlogsService.getCategorizedBlog(params.slug);
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const blogs = await BlogsService.getCategorizedBlog(slug);
   const latestBlogs = await BlogsService.getLatestBlogs();
   const categories = await BlogsService.getCategories();
-
   return (
     <Box
       sx={{

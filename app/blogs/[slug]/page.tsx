@@ -1,18 +1,17 @@
+import { Sidebar } from "@/components";
 import { BlogsService } from "@/services/blog.service";
 import { estimatedTimeToRead } from "@/utils/time";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
-import { type Metadata, type ResolvingMetadata } from "next";
 import Image from "next/image";
+import React from "react";
 import { format } from "date-fns";
-import { Sidebar } from "@/components";
-interface BlogPageProps {
-  params: { slug: string };
-}
+import { Metadata } from "next";
 
-export async function generateMetadata(
-  { params }: BlogPageProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   return {
     title: params.slug.charAt(0).toUpperCase() + params.slug.slice(1),
     description: "All blogs about IT",
@@ -29,13 +28,12 @@ export async function generateMetadata(
       apple: "/vercel.svg",
     },
   };
-}
-
-export default async function Page({ params }: BlogPageProps) {
-  const blog = await BlogsService.getDetailedBlog(params.slug);
+} 
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const {slug}=await params
+  const blog = await BlogsService.getDetailedBlog(slug);
   const latestBlogs = await BlogsService.getLatestBlogs();
   const categories = await BlogsService.getCategories();
-
   return (
     <Box
       sx={{
@@ -94,4 +92,4 @@ export default async function Page({ params }: BlogPageProps) {
       <Sidebar blogs={latestBlogs} categories={categories} />
     </Box>
   );
-}
+} 

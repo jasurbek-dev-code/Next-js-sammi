@@ -7,10 +7,11 @@ import React from "react";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const { slug } = await params;
   return {
-    title: params.slug.charAt(0).toUpperCase() + params.slug.slice(1),
+    title: slug.charAt(0).toUpperCase() + slug.slice(1),
     description: "All blogs about IT",
     keywords: ["IT", "programming", "frontend", "nextjs"],
     authors: [
@@ -27,8 +28,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const blogs = await BlogsService.getCategorizedBlog(params?.slug);
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const blogs = await BlogsService.getCategorizedBlog(slug);
   const latestBlogs = await BlogsService.getLatestBlogs();
   const categories = await BlogsService.getCategories();
 

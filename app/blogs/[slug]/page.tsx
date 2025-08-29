@@ -1,4 +1,3 @@
-import { Sidebar } from "@/components";
 import { BlogsService } from "@/services/blog.service";
 import { estimatedTimeToRead } from "@/utils/time";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
@@ -6,14 +5,16 @@ import Image from "next/image";
 import React from "react";
 import { format } from "date-fns";
 import { Metadata } from "next";
+import { Sidebar } from "@/components";
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const {slug}=await params
   return {
-    title: params.slug.charAt(0).toUpperCase() + params.slug.slice(1),
+    title: slug.charAt(0).toUpperCase() + slug.slice(1),
     description: "All blogs about IT",
     keywords: ["IT", "programming", "frontend", "nextjs"],
     authors: [
@@ -28,12 +29,16 @@ export async function generateMetadata({
       apple: "/vercel.svg",
     },
   };
-} 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const blog = await BlogsService.getDetailedBlog(params?.slug);
+}
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const blog = await BlogsService.getDetailedBlog(slug);
   const latestBlogs = await BlogsService.getLatestBlogs();
   const categories = await BlogsService.getCategories();
-
   return (
     <Box
       sx={{
@@ -51,8 +56,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             boxShadow: "0px 8px 16px rgba(255,255,255,.1)",
             borderRadius: "8px",
           }}
-          position="relative"
-          width="100%"
+          position={"relative"}
+          width={"100%"}
           height={{ xs: "30vh", md: "50vh" }}
         >
           <Image
@@ -79,7 +84,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </Box>
           </Box>
         </Box>
-        <Typography variant="h4" marginTop="20px">
+        <Typography variant="h4" marginTop={"20px"}>
           {blog.title}
         </Typography>
         <Typography color="gray">{blog.excerpt}</Typography>
